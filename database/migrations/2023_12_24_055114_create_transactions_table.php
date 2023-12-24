@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\Transaction\TransactionType;
+use App\Helpers\DatabaseCommenter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +16,12 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('wallet_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('reference_id')->unique();
             $table->bigInteger('amount');
-            $table->tinyInteger('type');
+            $table
+                ->tinyInteger('type')
+                ->comment(DatabaseCommenter::setCommentBasedOnEnum(TransactionType::class));
+
             $table->timestamps();
         });
     }

@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    use HasFactory,TransactionRelationsTrait;
+    use HasFactory,
+        TransactionRelationsTrait;
+
+    protected $fillable = [
+        'wallet_id', 'reference_id', 'type', 'amount',
+    ];
 
     protected $casts = [
         'type' => TransactionType::class,

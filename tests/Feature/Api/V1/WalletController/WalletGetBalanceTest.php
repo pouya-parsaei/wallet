@@ -2,72 +2,82 @@
 
 namespace Tests\Feature\Api\V1\WalletController;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Tests\Feature\Api\Contracts\Makers\UserMaker;
 use Tests\Feature\Api\Contracts\Makers\WalletMaker;
 use Tests\TestCase;
 
 class WalletGetBalanceTest extends TestCase
 {
-    use WalletMaker;
+    use UserMaker,
+        WalletMaker;
 
     private string $routeName = 'api.v1.wallets.get-balance';
 
     public function test_get_wallet_balance_returns_success_status_code(): void
     {
-        $userId = 1;
-        $this->createWallet(['user_id' => $userId]);
+        $user = $this->createUser();
+        $this->createWalletFor($user);
 
-        $response = $this->getJson(route($this->routeName, ['user_id' => $userId]));
+        $response = $this->getJson(route($this->routeName, ['user_id' => $user->id]));
 
         $response->assertSuccessful();
     }
 
     public function test_get_wallet_balance_returns_correct_json_structure(): void
     {
-        $userId = 1;
-        $this->createWallet(['user_id' => $userId]);
+        $user = $this->createUser();
+        $this->createWalletFor($user);
 
-        $response = $this->getJson(route($this->routeName, ['user_id' => $userId]));
+        $response = $this->getJson(route($this->routeName, ['user_id' => $user->id]));
 
         $response->assertJsonStructure([
-            'balance'
+            'balance',
         ]);
     }
 
     public function test_get_wallet_balance_returns_correct_balance(): void
     {
-        $userId = 1;
-        $wallet = $this->createWallet(['user_id' => $userId]);
+        $user = $this->createUser();
+        $wallet = $this->createWalletFor($user);
 
-        $response = $this->getJson(route($this->routeName, ['user_id' => $userId]));
+        $response = $this->getJson(route($this->routeName, ['user_id' => $user->id]));
 
         $response->assertJsonFragment([
-            'balance' => $wallet->balance
+            'balance' => $wallet->balance,
         ]);
     }
 
     public function test_get_wallet_balance_returns_error_when_user_id_is_invalid(): void
     {
-        $userId = 1;
-        $this->createWallet(['user_id' => $userId]);
         $invalidUserId = 999;
 
         $response = $this->getJson(route($this->routeName, ['user_id' => $invalidUserId]));
 
-        $response->assertNotFound()->assertJsonFragment(['message' => trans('messages.wallet_not_found_due_to_mismatch_user_id')]);
+        $response->assertInvalid(['user_id' => trans('validation.exists', ['attribute' => 'user id'])]);
     }
 
     public function test_get_wallet_balance_returns_negative_balance_when_wallet_balance_is_negative(): void
     {
-        $userId = 1;
         $negativeBalance = -999;
-        $this->createWallet(['user_id' => $userId, 'balance' => $negativeBalance]);
+        $user = $this->createUser();
+        $this->createWalletFor($user, ['balance' => $negativeBalance]);
 
-        $response = $this->getJson(route($this->routeName, ['user_id' => $userId]));
+        $response = $this->getJson(route($this->routeName, ['user_id' => $user->id]));
 
         $response->assertJsonFragment([
-            'balance' => $negativeBalance
+            'balance' => $negativeBalance,
         ]);
+    }
+
+    public function test_get_wallet_balance_returns_error_when_user_does_not_have_wallet(): void
+    {
+        $user = $this->createUser();
+
+        $response = $this->getJson(route($this->routeName, ['user_id' => $user->id]));
+
+        $response->assertNotFound()->assertJsonFragment([
+            'message' => trans('messages.user_does_not_have_wallet'),
+        ]);
+
     }
 }

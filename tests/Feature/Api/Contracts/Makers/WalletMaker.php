@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Api\Contracts\Makers;
 
+use App\Models\User;
 use App\Models\Wallet;
 
 trait WalletMaker
 {
-    public function createWallet(array $data = []): Wallet
+    public function createWalletFor(User $user, array $data = []): Wallet
     {
-        return Wallet::factory()->create($data);
+        return Wallet::factory()->for($user)->create($data);
     }
 }

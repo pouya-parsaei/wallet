@@ -1,5 +1,7 @@
 <?php
 
 return [
-    'wallet_not_found_due_to_mismatch_user_id'=>'wallet with provided user id not found'
+    'invalid_user_id' => 'user id is not valid',
+    'amount_could_not_be_zero' => 'amount could not be 0',
+    'user_does_not_have_wallet' => 'user does not have wallet',
 ];

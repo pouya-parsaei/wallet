@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,12 +10,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class WalletFactory extends Factory
 {
-
     public function definition(): array
     {
         return [
-            'user_id' => random_int(1, 100),
-            'balance' => random_int(-200, 200)
+            'user_id' => User::factory(),
+            'balance' => random_int(-200, 200),
         ];
     }
 }
