@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\AddMoneyToWalletDTO;
 use App\Exceptions\InvalidArgumentException;
 use App\Exceptions\RuntimeException;
 use App\Models\User;
@@ -42,8 +43,11 @@ class WalletService
         return $wallet;
     }
 
-    public function addMoneyToUserWallet(int $userId, int $amount): int
+    public function addMoneyToUserWallet(AddMoneyToWalletDTO $addMoneyToWalletDTO): int
     {
+        $amount = $addMoneyToWalletDTO->getAmount();
+        $userId = $addMoneyToWalletDTO->getUserId();
+
         $this->checkIfAmountIsValid($amount);
 
         return Cache::lock('user_'.$userId)->block(3, function () use ($userId, $amount) {
