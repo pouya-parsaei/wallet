@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "7f8d5498-8ba1-4b62-9063-3c7d5fb894b9",
+		"name": "wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17580184"
+	},
+	"item": [
+		{
+			"name": "Wallet - Add-Money",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "100",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/wallets/add-money",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallets",
+						"add-money"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add-Money-Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "-100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/wallets/add-money",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"add-money"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:83"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 15:03:33 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"reference_id\": 2776116421\n}"
+				},
+				{
+					"name": "Add-Money-Invalid-User-Id-and-Amount",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "1999",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "999999999999999999999",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/wallets/add-money",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"add-money"
+							]
+						}
+					},
+					"status": "Unprocessable Content",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:83"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 15:04:41 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"The selected user id is invalid. (and 2 more errors)\",\n    \"errors\": {\n        \"user_id\": [\n            \"The selected user id is invalid.\"\n        ],\n        \"amount\": [\n            \"The amount field must be an integer.\",\n            \"The amount field must not be greater than 999999999999.\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Wallet - Get-Balance",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/wallets/get-balance?user_id=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"wallets",
+						"get-balance"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get-Balance-Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/wallets/get-balance?user_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"get-balance"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:83"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 15:02:48 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"balance\": -230\n}"
+				},
+				{
+					"name": "Get-Balance-Invalid-User-Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/wallets/get-balance?user_id=19999",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wallets",
+								"get-balance"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "19999"
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Content",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Host",
+							"value": "localhost:83"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 24 Dec 2023 15:06:13 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"The selected user id is invalid.\",\n    \"errors\": {\n        \"user_id\": [\n            \"The selected user id is invalid.\"\n        ]\n    }\n}"
+				}
+			]
+		}
+	]
+}
