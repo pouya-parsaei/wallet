@@ -2,17 +2,16 @@
 
 namespace Database\Seeders\Fake;
 
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
-class FakeDataSeeder extends Seeder
+class TransactionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $this->call(UserSeeder::class);
-        $this->call(WalletSeeder::class);
-        $this->call(TransactionSeeder::class);
+        Transaction::factory(random_int(10, 30))->create();
     }
 }

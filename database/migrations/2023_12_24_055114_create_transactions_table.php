@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('wallet_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('reference_id')->unique();
-            $table->bigInteger('amount');
+            $table->unsignedBigInteger('amount');
             $table
                 ->tinyInteger('type')
                 ->comment(DatabaseCommenter::setCommentBasedOnEnum(TransactionType::class));

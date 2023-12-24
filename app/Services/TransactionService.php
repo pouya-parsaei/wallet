@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\Transaction\TransactionType;
+use App\Helpers\ReferenceMaker;
 use App\Models\Transaction;
 
 class TransactionService
@@ -11,8 +12,8 @@ class TransactionService
     {
         return Transaction::create([
             'wallet_id' => $walletId,
-            'amount' => $amount,
-            'reference_id' => abs(crc32(uniqid())),
+            'amount' => abs($amount),
+            'reference_id' => ReferenceMaker::makeNumericReferenceId(),
             'type' => $amount < 0 ? TransactionType::Withdraw : TransactionType::Deposit,
         ]);
     }

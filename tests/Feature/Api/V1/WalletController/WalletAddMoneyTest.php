@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api\V1\WalletController;
 
+use App\Enums\Transaction\TransactionType;
 use App\Models\Transaction;
 use Tests\Feature\Api\Contracts\Makers\UserMaker;
 use Tests\Feature\Api\Contracts\Makers\WalletMaker;
@@ -60,6 +61,7 @@ class WalletAddMoneyTest extends TestCase
         $this->assertDatabaseHas('transactions', [
             'wallet_id' => $wallet->id,
             'amount' => $amount,
+            'type' => TransactionType::Deposit->value,
         ]);
 
         $expectedWalletBalance = $wallet->balance + $amount;
@@ -80,7 +82,8 @@ class WalletAddMoneyTest extends TestCase
         $this->assertDatabaseCount('transactions', 1);
         $this->assertDatabaseHas('transactions', [
             'wallet_id' => $wallet->id,
-            'amount' => $amount,
+            'amount' => 100,
+            'type' => TransactionType::Withdraw->value,
         ]);
 
         $expectedWalletBalance = $wallet->balance + $amount;
